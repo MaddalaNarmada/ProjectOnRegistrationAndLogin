@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <form>
+
+            <div class="form-group">
+                <div class="text-center" id="display"></div>
+                <label>UserName</label>
+                <input class="form-control" type="email" id="tbemail" name="email" placeholder="UserName or email">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" id="tbpwd" name="password" placeholder="Password">
+            </div>
+
+            <div class="text-center">
+                <button type="button" id="btnreg" class="btn btn-success" onclick="SignUp()">SignUp</button>&nbsp;&nbsp;&nbsp;
+                <button type="button" id="btnres" class="btn btn-success" onclick="SignIn()">SignIn</button>
+            </div><br>
+            <div class="text-center">
+                <label>Forgot Your Password? <a href="changePassword.html">Change Password</a></label>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+<script>
+    function SignIn()
+    {
+        let email,password;
+        email=document.getElementById("tbemail").value
+<!--        console.log(email)-->
+        password=document.getElementById("tbpwd").value
+
+
+        let user_data = new Array()
+         user_data = JSON.parse(localStorage.getItem('userData'))?JSON.parse(localStorage.getItem('userData')):[]
+
+         let current_user = user_data.filter((val)=>{
+                return (val.email==email || val.name==email)
+         })[0]
+         if(current_user != undefined){
+             if((current_user.email==email || current_user.name==email) && current_user.password==password){
+                 localStorage.setItem('name',current_user.name);
+                 localStorage.setItem('email',current_user.email);
+                 window.location.href = "profile.html"
+            }
+
+             else{
+                 document.getElementById("display").innerHTML= "&#33; &nbsp;<b>Entered Invalid email and password</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x"
+                 document.getElementById("display").style.width= "60%";
+                 document.getElementById("display").style.height= "50%";
+                 document.getElementById("display").style.margin="auto";
+                 document.getElementById("display").style.marginTop="5px";
+                 document.getElementById("display").style.marginBottom="5px";
+                 document.getElementById("display").style.padding="auto";
+                 document.getElementById("display").style.border= "1px dotted gold;"
+                 document.getElementById("display").style.backgroundColor="red"
+                 document.getElementById("display").style.opacity="0.7"
+                 document.getElementById("display").style.color="black";
+                 document.getElementById("display").style.cursor="context-menu";
+         }
+        }
+        else{
+             document.getElementById("display").innerHTML= "&#33; &nbsp;<b>Account doesn't exist with this mail id</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; x"
+             document.getElementById("display").style.width= "60%";
+             document.getElementById("display").style.height= "50%";
+             document.getElementById("display").style.margin="auto";
+             document.getElementById("display").style.marginTop="5px";
+             document.getElementById("display").style.marginBottom="5px";
+             document.getElementById("display").style.padding="auto";
+             document.getElementById("display").style.border= "1px dotted gold;"
+             document.getElementById("display").style.backgroundColor="red"
+             document.getElementById("display").style.opacity="0.7"
+             document.getElementById("display").style.color="black";
+             document.getElementById("display").style.cursor="context-menu";
+        }
+      }
+        function SignUp(){
+             window.location.href="registration.html"
+        }
+</script>
+</html>
